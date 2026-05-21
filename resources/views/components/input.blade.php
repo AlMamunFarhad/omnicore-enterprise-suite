@@ -15,7 +15,7 @@
 @php
     $id = $id ?? 'input-' . $name;
     $labelStyles = "block text-sm font-semibold text-primary mb-2 select-none uppercase tracking-wider";
-    $inputBaseStyles = "w-full form-control-input text-sm text-secondary disabled:bg-slate-50 disabled:opacity-60";
+    $inputBaseStyles = "w-full form-control-input text-sm text-secondary";
     if ($error) {
         $inputBaseStyles .= " is-invalid";
     } elseif ($valid) {
@@ -23,7 +23,7 @@
     }
 @endphp
 
-<div class="mb-4">
+<div class="mb-3">
     @if($label)
         <label for="{{ $id }}" class="{{ $labelStyles }}">
             {{ $label }}
@@ -39,7 +39,7 @@
             name="{{ $name }}" 
             placeholder="{{ $placeholder }}"
             {{ $required ? 'required' : '' }}
-            {{ $attributes->merge(['class' => 'w-full form-control-input text-sm text-secondary disabled:bg-slate-50 disabled:opacity-60' . ($error ? ' is-invalid' : ($valid ? ' is-valid' : ''))]) }}
+            {{ $attributes->merge(['class' => 'w-full form-control-input text-sm text-secondary' . ($error ? ' is-invalid' : ($valid ? ' is-valid' : ''))]) }}
         >{{ $value ?? $slot }}</textarea>
     
     @elseif($type === 'select')
@@ -77,8 +77,8 @@
             {{ $error }}
         </p>
     @elseif($helper)
-        <p class="text-sm text-secondary/70 font-normal mt-1.5 mb-0" id="{{ $id }}-helper">
+        <small class="form-text text-muted" id="{{ $id }}-helper">
             {{ $helper }}
-        </p>
+        </small>
     @endif
 </div>
