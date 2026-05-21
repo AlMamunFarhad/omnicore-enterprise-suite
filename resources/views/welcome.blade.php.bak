@@ -547,8 +547,12 @@
                                     <td class="px-4 py-3"><x-badge :variant="$variant"
                                             dot="true">{{ $status }}</x-badge></td>
                                     <td class="px-4 py-3">
+                                        {{-- <x-button :variant="$variant === 'success' ? 'ghost' : 'primary'" size="sm"
+                                            onclick="{{ $variant === 'success' ? 'void(0)' : "replenish(this, '$name')" }}">
+                                            {{ $variant === 'success' ? 'Stocked' : 'Reorder' }}
+                                        </x-button> --}}
                                         <x-button :variant="$variant === 'success' ? 'ghost' : 'primary'" size="sm"
-                                            onclick="{{ $variant === 'success' ? 'void(0)' : 'replenish(this,\'' . $name . '\')' }}">
+                                            onclick='{{ $variant === 'success' ? 'void(0)' : "replenish(this, \"$name\")" }}'>
                                             {{ $variant === 'success' ? 'Stocked' : 'Reorder' }}
                                         </x-button>
                                     </td>
@@ -883,65 +887,45 @@
         </x-alert>
 
         {{-- Buttons --}}
-        <x-card title="&lt;x-button&gt; System Standards"
-            subtitle="Premium button components supporting solid, outline, and ghost variants. Sized uniformly (sm: 32px, md: 38px, lg: 46px).">
-            <div class="space-y-4">
-                <div>
-                    <p class="text-sm font-semibold text-primary dark:text-slate-200 mb-2 uppercase tracking-wider">Solid Button System</p>
-                    <div class="flex flex-wrap gap-3 items-center">
-                        <x-button variant="primary">Primary Action</x-button>
-                        <x-button variant="secondary">Secondary Action</x-button>
-                        <x-button variant="success">Success / Confirm</x-button>
-                        <x-button variant="danger">Danger / Delete</x-button>
-                        <x-button variant="ghost">Ghost Option</x-button>
-                        <x-button variant="primary" disabled="true">Disabled Solid</x-button>
-                    </div>
-                </div>
-                
-                <div class="border-t border-border-subtle dark:border-slate-700 pt-3">
-                    <p class="text-sm font-semibold text-primary dark:text-slate-200 mb-2 uppercase tracking-wider">Outline Button Variants</p>
-                    <div class="flex flex-wrap gap-3 items-center">
-                        <x-button variant="outline-primary">Outline Primary</x-button>
-                        <x-button variant="outline-secondary">Outline Secondary</x-button>
-                        <x-button variant="outline-success">Outline Success</x-button>
-                        <x-button variant="outline-danger">Outline Danger</x-button>
-                        <x-button variant="outline-primary" disabled="true">Disabled Outline</x-button>
-                    </div>
-                </div>
-
-                <div class="border-t border-border-subtle dark:border-slate-700 pt-3">
-                    <p class="text-sm font-semibold text-primary dark:text-slate-200 mb-2 uppercase tracking-wider">Sizing Metrics & Icon Buttons</p>
-                    <div class="flex flex-wrap gap-4 items-center">
-                        <div class="flex items-center gap-2">
-                            <x-button variant="primary" size="sm">Small (32px)</x-button>
-                            <x-button variant="primary" size="md">Medium (38px)</x-button>
-                            <x-button variant="primary" size="lg">Large (46px)</x-button>
-                        </div>
-                        <div class="h-6 w-px bg-border-subtle dark:bg-slate-700"></div>
-                        <div class="flex items-center gap-2">
-                            <span class="text-sm text-secondary dark:text-slate-400 font-medium">Icon-Only Buttons (38px square):</span>
-                            <x-button variant="icon" title="Global Search" aria-label="Search">
-                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                                </svg>
-                            </x-button>
-                            <x-button variant="icon" title="Filter Records" aria-label="Filter">
-                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L13 13.414V19a1 1 0 01-.553.894l-4 2A1 1 0 017 21v-7.586L3.293 6.707A1 1 0 013 6V4z" />
-                                </svg>
-                            </x-button>
-                            <x-button variant="icon" title="Export PDF" aria-label="Export">
-                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                                </svg>
-                            </x-button>
-                            <x-button variant="icon" disabled="true" title="Disabled Action" aria-label="Disabled Action">
-                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                                </svg>
-                            </x-button>
-                        </div>
-                    </div>
+        <x-card title="&lt;x-button&gt;"
+            subtitle="Supports variants: primary, secondary, success, danger, outline, ghost. Sizes: sm, md, lg.">
+            <div class="flex flex-wrap gap-3 items-center">
+                <x-button variant="primary">Primary</x-button>
+                <x-button variant="secondary">Secondary</x-button>
+                <x-button variant="success">Success</x-button>
+                <x-button variant="danger">Danger</x-button>
+                <x-button variant="outline">Outline</x-button>
+                <x-button variant="ghost">Ghost</x-button>
+                <x-button variant="primary" disabled="true">Disabled</x-button>
+            </div>
+            <div
+                class="mt-3 flex flex-wrap gap-3 items-center border-t border-border-subtle dark:border-slate-700 pt-3">
+                <x-button variant="primary" size="sm">Small</x-button>
+                <x-button variant="primary" size="md">Medium</x-button>
+                <x-button variant="primary" size="lg">Large</x-button>
+                {{-- Quick action icon buttons --}}
+                <div class="ml-auto flex items-center gap-2">
+                    <span class="text-sm text-secondary dark:text-slate-400 font-medium">Quick Actions:</span>
+                    <button class="btn-quick-action" title="Add new item" aria-label="Add new">
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                            stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                        </svg>
+                    </button>
+                    <button class="btn-quick-action" title="Filter" aria-label="Filter">
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                            stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L13 13.414V19a1 1 0 01-.553.894l-4 2A1 1 0 017 21v-7.586L3.293 6.707A1 1 0 013 6V4z" />
+                        </svg>
+                    </button>
+                    <button class="btn-quick-action" title="Export" aria-label="Export">
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                            stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        </svg>
+                    </button>
                 </div>
             </div>
         </x-card>
@@ -996,65 +980,6 @@
                     <x-input name="doc_notes" label="Notes" type="textarea" placeholder="Additional remarks…" />
                 </div>
             </div>
-        </x-card>
-
-        {{-- Form Layout, Field Grouping & Spacing Standards --}}
-        <x-card title="Form Layout, Field Grouping & Spacing Standards"
-            subtitle="Demonstrating fieldset groupings (.form-section), uniform spacing (mb-3), disabled & read-only states, and consistent button alignment.">
-            
-            <form onsubmit="event.preventDefault(); showToast('success', 'Grouped form submitted successfully!')">
-                
-                {{-- Section A --}}
-                <div class="form-section">
-                    <div class="form-section-header">
-                        Section A: User Profile & Identity (Gutters & Spacing Standards)
-                    </div>
-                    <div class="form-section-body">
-                        <div class="omni-grid-2">
-                            <x-input name="demo_first" label="First Name" placeholder="e.g. Al Mamun" required="true" helper="Uses uniform vertical spacing (mb-3) and multi-column grid gutters." />
-                            <x-input name="demo_last" label="Last Name" placeholder="e.g. Farhad" required="true" helper="Required fields are marked with a red asterisk." />
-                        </div>
-                        <div class="omni-grid-2 mt-3">
-                            <x-input name="demo_email" label="Email Address" type="email" placeholder="y.arafat@coreaxis.com" required="true" helper="Validates format automatically on submission." />
-                            <x-input name="demo_phone" label="Phone Number" placeholder="+880 1700-000000" helper="Optional contact number." />
-                        </div>
-                    </div>
-                </div>
-
-                {{-- Section B --}}
-                <div class="form-section">
-                    <div class="form-section-header">
-                        Section B: System Status & Security Options (Disabled & Read-Only states)
-                    </div>
-                    <div class="form-section-body">
-                        <div class="omni-grid-2">
-                            <x-input name="demo_uuid" label="System Assigned UUID (Read-Only)" value="UUID-99102-SLD-OMNI" readonly="true" helper="Read-only fields retain normal text styling but have no focus outline/ring." />
-                            <x-input name="demo_lock" label="Account Security Level (Disabled)" value="RESTRICTED DEEP SECURITY" disabled="true" helper="Disabled inputs use a lighter background (#e9ecef) and a not-allowed cursor." />
-                        </div>
-                        <div class="mt-3">
-                            <x-input name="demo_logs" label="Administrative Notes (Read-Only Textarea)" type="textarea" readonly="true" helper="Multi-line read-only field with disabled focus ring.">Logs are written automatically by server daemons and mapped directly. Under current security standards, modifications to this log-stream are disabled.</x-input>
-                        </div>
-                    </div>
-                </div>
-
-                {{-- Action Buttons --}}
-                <div class="flex justify-between items-center pt-2">
-                    <div>
-                        <x-button type="button" variant="outline-secondary" onclick="this.closest('form').reset(); showToast('info', 'Form inputs reset.');">
-                            Reset Form
-                        </x-button>
-                    </div>
-                    <div class="flex gap-2">
-                        <x-button type="button" variant="ghost" onclick="showToast('warning', 'Action cancelled.')">
-                            Cancel
-                        </x-button>
-                        <x-button type="submit" variant="primary">
-                            Submit Account Profile
-                        </x-button>
-                    </div>
-                </div>
-
-            </form>
         </x-card>
 
         {{-- Checkboxes --}}
