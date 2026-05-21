@@ -547,8 +547,12 @@
                                     <td class="px-4 py-3"><x-badge :variant="$variant"
                                             dot="true">{{ $status }}</x-badge></td>
                                     <td class="px-4 py-3">
+                                        {{-- <x-button :variant="$variant === 'success' ? 'ghost' : 'primary'" size="sm"
+                                            onclick="{{ $variant === 'success' ? 'void(0)' : "replenish(this, '$name')" }}">
+                                            {{ $variant === 'success' ? 'Stocked' : 'Reorder' }}
+                                        </x-button> --}}
                                         <x-button :variant="$variant === 'success' ? 'ghost' : 'primary'" size="sm"
-                                            onclick="{{ $variant === 'success' ? 'void(0)' : 'replenish(this,\'' . $name . '\')' }}">
+                                            onclick='{{ $variant === 'success' ? 'void(0)' : "replenish(this, \"$name\")" }}'>
                                             {{ $variant === 'success' ? 'Stocked' : 'Reorder' }}
                                         </x-button>
                                     </td>

@@ -5,7 +5,484 @@
 @source '../**/*.blade.php';
 @source '../**/*.js';
 
+/* ============================================================
+   THEME TOKENS
+   ============================================================ */
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    /* Font stack — Inter, then system sans */
+    --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+    /* Border radius — uniform 4px everywhere */
+    --radius-xs:   0.25rem;
+    --radius-sm:   0.25rem;
+    --radius-md:   0.25rem;
+    --radius-lg:   0.25rem;
+    --radius-xl:   0.25rem;
+    --radius-2xl:  0.25rem;
+    --radius-3xl:  0.25rem;
+    --radius-full: 9999px;
+
+    /* Shadow — single subtle depth */
+    --shadow-sm: 0 1px 3px 0 rgba(0,0,0,.07), 0 1px 2px -1px rgba(0,0,0,.05);
+    --shadow-md: 0 1px 3px 0 rgba(0,0,0,.07), 0 1px 2px -1px rgba(0,0,0,.05);
+    --shadow-lg: 0 1px 3px 0 rgba(0,0,0,.07), 0 1px 2px -1px rgba(0,0,0,.05);
+    --shadow-xl: 0 1px 3px 0 rgba(0,0,0,.07), 0 1px 2px -1px rgba(0,0,0,.05);
+
+    /* ---- Color Palette ---- */
+    /* Primary Blue */
+    --color-primary:        #1d4ed8;
+    --color-primary-hover:  #1e40af;
+    --color-primary-active: #1e3a8a;
+
+    /* Gray (secondary / body text / borders) */
+    --color-secondary:        #475569;
+    --color-secondary-hover:  #64748b;
+    --color-secondary-active: #334155;
+
+    /* Semantic status */
+    --color-success:        #15803d;
+    --color-success-hover:  #166534;
+    --color-success-active: #14532d;
+
+    --color-warning:        #b45309;
+    --color-warning-hover:  #92400e;
+    --color-warning-active: #78350f;
+
+    --color-danger:        #b91c1c;
+    --color-danger-hover:  #991b1b;
+    --color-danger-active: #7f1d1d;
+
+    --color-info:        #0369a1;
+    --color-info-hover:  #075985;
+    --color-info-active: #0c4a6e;
+
+    /* Accent orange (highlights/badges only) */
+    --color-accent-orange:        #ea580c;
+    --color-accent-orange-hover:  #c2410c;
+    --color-accent-orange-active: #9a3412;
+
+    /* Layout surfaces */
+    --color-neutral-bg:   #f8fafc;
+    --color-panel-bg:     #ffffff;
+    --color-border-subtle: #e2e8f0;
 }
+
+/* ============================================================
+   TYPOGRAPHY SCALE
+   Base: 1rem (16px), min small text: 0.875rem (14px)
+   ============================================================ */
+body {
+    font-size:        1rem;
+    line-height:      1.5;
+    color:            #475569;
+    background-color: var(--color-neutral-bg);
+}
+
+h1 { font-size: 2rem;     font-weight: 600; line-height: 1.2;  color: #0f172a; margin: 0; }
+h2 { font-size: 1.5rem;   font-weight: 600; line-height: 1.25; color: #0f172a; margin: 0; }
+h3 { font-size: 1.25rem;  font-weight: 600; line-height: 1.3;  color: #0f172a; margin: 0; }
+h4 { font-size: 1.125rem; font-weight: 600; line-height: 1.3;  color: #0f172a; margin: 0; }
+h5 { font-size: 1rem;     font-weight: 600; line-height: 1.3;  color: #0f172a; margin: 0; }
+h6 { font-size: 0.875rem; font-weight: 600; line-height: 1.3;  color: #0f172a; margin: 0; }
+
+p { margin: 0 0 0.75rem; }
+
+/* ============================================================
+   DARK MODE OVERRIDES  (html.dark)
+   ============================================================ */
+html.dark body {
+    color:            #9ca3af;
+    background-color: #0b0f19;
+}
+html.dark h1,
+html.dark h2,
+html.dark h3,
+html.dark h4,
+html.dark h5,
+html.dark h6 { color: #f1f5f9; }
+
+html.dark .bg-panel-bg     { background-color: #111827 !important; }
+html.dark .bg-neutral-bg   { background-color: #0b0f19 !important; }
+html.dark .border-border-subtle { border-color: #1f2937 !important; }
+html.dark .bg-slate-50     { background-color: #1f2937 !important; }
+html.dark .bg-slate-100    { background-color: #374151 !important; }
+html.dark .text-primary    { color: #60a5fa   !important; }
+
+/* ============================================================
+   UNIFORM FORM CONTROL
+   Height consistent with 0.75rem padding top/bottom
+   ============================================================ */
+.form-control-input {
+    display:          block;
+    width:            100%;
+    height:           calc(1.5em + 1.5rem + 2px);
+    padding:          0.75rem;
+    font-size:        1rem;
+    font-weight:      400;
+    line-height:      1.5;
+    color:            #0f172a;
+    background-color: var(--color-panel-bg);
+    border:           1px solid var(--color-border-subtle);
+    border-radius:    0.25rem;
+    transition:       border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    appearance:       none;
+}
+textarea.form-control-input {
+    height:           auto;
+    min-height:       100px;
+}
+.form-control-input::placeholder { color: #94a3b8; }
+.form-control-input:focus {
+    outline:    none;
+    border-color: #93c5fd;
+    box-shadow: 0 0 0 3px rgba(29,78,216,.12);
+}
+.form-control-input:disabled {
+    background-color: #f1f5f9;
+    opacity: .65;
+    cursor:  not-allowed;
+}
+
+/* Validation Styles */
+.form-control-input.is-invalid {
+    border-color:     var(--color-danger) !important;
+}
+.form-control-input.is-invalid:focus {
+    box-shadow:       0 0 0 3px rgba(185, 28, 28, 0.15) !important;
+}
+.form-control-input.is-valid {
+    border-color:     var(--color-success) !important;
+}
+.form-control-input.is-valid:focus {
+    box-shadow:       0 0 0 3px rgba(21, 128, 61, 0.15) !important;
+}
+.invalid-feedback {
+    display:          block;
+    width:            100%;
+    margin-top:       0.375rem;
+    font-size:        0.875rem;
+    font-weight:      500;
+    color:            var(--color-danger);
+}
+
+html.dark .form-control-input {
+    background-color: #1f2937;
+    border-color:     #374151;
+    color:            #f1f5f9;
+}
+html.dark .form-control-input:focus {
+    border-color: #3b82f6;
+    box-shadow:   0 0 0 3px rgba(59,130,246,.18);
+}
+html.dark .form-control-input.is-invalid {
+    border-color:     #f87171 !important;
+}
+html.dark .form-control-input.is-valid {
+    border-color:     #4ade80 !important;
+}
+html.dark .invalid-feedback {
+    color:            #f87171;
+}
+
+/* ============================================================
+   TABLES — sticky header on tall tables
+   max-height 400px keeps header visible while scrolling
+   ============================================================ */
+.table-scroll-container {
+    overflow-x: auto;
+    overflow-y: auto;
+    max-height: 400px;
+}
+.table-scroll-container thead th {
+    position: sticky;
+    top:       0;
+    z-index:   1;
+    background-color: #f8fafc;
+    box-shadow: 0 1px 0 0 #e2e8f0;
+}
+html.dark .table-scroll-container thead th {
+    background-color: #1f2937;
+    box-shadow: 0 1px 0 0 #374151;
+}
+
+/* ============================================================
+   MODAL ANIMATION
+   ============================================================ */
+@keyframes omni-modal-in {
+    from { opacity: 0; transform: translateY(-10px) scale(.98); }
+    to   { opacity: 1; transform: translateY(0)     scale(1);   }
+}
+.omni-modal-panel { animation: omni-modal-in 0.18s ease-out; }
+
+/* ============================================================
+   SIDEBAR ICON-RAIL TOOLTIPS
+   When sidebar is collapsed to 60px, show item label on hover
+   ============================================================ */
+.sidebar-shell.w-\[60px\] [data-tooltip] {
+    position: relative;
+}
+.sidebar-shell.w-\[60px\] [data-tooltip]::after {
+    content:     attr(data-tooltip);
+    position:    absolute;
+    left:        calc(100% + 12px);
+    top:         50%;
+    transform:   translateY(-50%);
+    white-space: nowrap;
+    background:  #0f172a;
+    color:       #f8fafc;
+    font-size:   0.875rem;
+    font-weight: 500;
+    padding:     0.25rem 0.625rem;
+    border-radius: 0.25rem;
+    pointer-events: none;
+    opacity:     0;
+    transition:  opacity .15s ease;
+    z-index:     50;
+}
+.sidebar-shell.w-\[60px\] [data-tooltip]:hover::after {
+    opacity: 1;
+}
+
+/* ============================================================
+   GRID GUTTER UTILITY  (like Bootstrap g-3 = 1rem gap)
+   ============================================================ */
+.omni-grid {
+    display:               grid;
+    gap:                   1rem;             /* g-3 equivalent */
+    grid-template-columns: 1fr;
+}
+@media (min-width: 640px)  { .omni-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .omni-grid { grid-template-columns: repeat(4, 1fr); } }
+.omni-grid-3 {
+    display:               grid;
+    gap:                   1rem;
+    grid-template-columns: 1fr;
+}
+@media (min-width: 640px)  { .omni-grid-3 { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .omni-grid-3 { grid-template-columns: repeat(3, 1fr); } }
+.omni-grid-2 {
+    display:               grid;
+    gap:                   1rem;
+    grid-template-columns: 1fr;
+}
+@media (min-width: 768px)  { .omni-grid-2 { grid-template-columns: repeat(2, 1fr); } }
+
+/* ============================================================
+   POS LAYOUT — two-panel flex, stacks on mobile
+   ============================================================ */
+.pos-shell {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+@media (min-width: 1024px) {
+    .pos-shell {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+    .pos-catalog  { flex: 1 1 0%; min-width: 0; }
+    .pos-register { flex: 0 0 340px; width: 340px; position: sticky; top: 0; }
+}
+
+/* ============================================================
+   PREMIUM CUSTOM SCROLLBAR
+   ============================================================ */
+::-webkit-scrollbar              { width: 6px; height: 6px; }
+::-webkit-scrollbar-track        { background: transparent; }
+::-webkit-scrollbar-thumb        { background: #cbd5e1; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover  { background: #94a3b8; }
+html.dark ::-webkit-scrollbar-thumb { background: #374151; }
+
+/* ============================================================
+   FORM SWITCH (TOGGLE)
+   ============================================================ */
+.form-switch {
+    position: relative;
+    width: 2.25rem;
+    height: 1.25rem;
+    background-color: #cbd5e1;
+    border-radius: 1rem;
+    appearance: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+    outline: none;
+}
+.form-switch::before {
+    content: "";
+    position: absolute;
+    top: 0.125rem;
+    left: 0.125rem;
+    width: 1rem;
+    height: 1rem;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.2s ease;
+}
+.form-switch:checked {
+    background-color: var(--color-primary);
+}
+.form-switch:checked::before {
+    transform: translateX(1rem);
+}
+html.dark .form-switch {
+    background-color: #374151;
+}
+
+/* ============================================================
+   DROPDOWN ANIMATION
+   ============================================================ */
+@keyframes omni-dropdown-in {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.dropdown-menu-open {
+    display: block !important;
+    animation: omni-dropdown-in 0.12s ease-out;
+}
+
+/* ============================================================
+   CHECKBOX & RADIO — 1rem square / circle, 0.5rem gap
+   ============================================================ */
+.form-check {
+    display:     flex;
+    align-items: center;
+    gap:         0.5rem;         /* 0.5rem gap between control + label */
+    cursor:      pointer;
+}
+.form-check-input[type="checkbox"],
+.form-check-input[type="radio"] {
+    appearance:       none;
+    -webkit-appearance: none;
+    width:            1rem;      /* 1rem square */
+    height:           1rem;
+    min-width:        1rem;
+    border:           2px solid var(--color-border-subtle);
+    background-color: var(--color-panel-bg);
+    cursor:           pointer;
+    flex-shrink:      0;
+    transition:       border-color .15s, background-color .15s;
+    position:         relative;
+}
+.form-check-input[type="checkbox"] {
+    border-radius:    0.25rem;   /* square */
+}
+.form-check-input[type="radio"] {
+    border-radius:    50%;       /* circle */
+}
+/* Checked state — checkmark */
+.form-check-input[type="checkbox"]:checked {
+    background-color: var(--color-primary);
+    border-color:     var(--color-primary);
+}
+.form-check-input[type="checkbox"]:checked::after {
+    content:    '';
+    position:   absolute;
+    left:       0.2rem;
+    top:        0.05rem;
+    width:      0.35rem;
+    height:     0.6rem;
+    border:     2px solid white;
+    border-top: none;
+    border-left: none;
+    transform:  rotate(45deg);
+}
+/* Checked state — filled dot */
+.form-check-input[type="radio"]:checked {
+    border-color: var(--color-primary);
+}
+.form-check-input[type="radio"]:checked::after {
+    content:          '';
+    position:         absolute;
+    inset:            0.2rem;
+    background-color: var(--color-primary);
+    border-radius:    50%;
+}
+.form-check-input:focus {
+    outline:    none;
+    box-shadow: 0 0 0 3px rgba(29,78,216,.12);
+}
+.form-check-label {
+    font-size:   1rem;       /* same as body */
+    color:       #475569;
+    line-height: 1;
+    user-select: none;
+}
+html.dark .form-check-input[type="checkbox"],
+html.dark .form-check-input[type="radio"] {
+    background-color: #1f2937;
+    border-color:     #374151;
+}
+html.dark .form-check-label {
+    color: #9ca3af;
+}
+
+/* ============================================================
+   SIDEBAR SUBMENU — indented sub-items (multilevel nav)
+   ============================================================ */
+.sidebar-sublink {
+    display:         flex;
+    align-items:     center;
+    gap:             0.625rem;
+    width:           100%;
+    padding:         0.5rem 0.75rem 0.5rem 2.75rem; /* 2.75rem left indent */
+    font-size:       0.875rem;
+    font-weight:     500;
+    border-left:     2px solid transparent;
+    border-radius:   0.25rem;
+    color:           #94a3b8;
+    transition:      background-color .15s, color .15s, border-color .15s;
+    cursor:          pointer;
+    text-align:      left;
+    background:      transparent;
+    white-space:     nowrap;
+}
+.sidebar-sublink:hover {
+    background-color: rgba(255,255,255,.06);
+    color:            #ffffff;
+}
+.sidebar-sublink.active {
+    background-color: rgba(255,255,255,.10);
+    border-left-color: #60a5fa;
+    color:            #ffffff;
+}
+
+/* ============================================================
+   QUICK ACTION ICON BUTTON — top-right of content area
+   ============================================================ */
+.btn-quick-action {
+    display:         inline-flex;
+    align-items:     center;
+    justify-content: center;
+    width:           2rem;
+    height:          2rem;
+    border-radius:   0.25rem;
+    border:          1px solid var(--color-border-subtle);
+    background-color: var(--color-panel-bg);
+    color:           var(--color-secondary);
+    cursor:          pointer;
+    transition:      background-color .15s, color .15s, border-color .15s;
+    flex-shrink:     0;
+}
+.btn-quick-action:hover {
+    background-color: var(--color-primary);
+    border-color:     var(--color-primary);
+    color:            white;
+}
+html.dark .btn-quick-action {
+    background-color: #1f2937;
+    border-color:     #374151;
+    color:            #9ca3af;
+}
+html.dark .btn-quick-action:hover {
+    background-color: var(--color-primary);
+    border-color:     var(--color-primary);
+    color:            white;
+}
+
+/* ============================================================
+   FONT WEIGHT UTILITY
+   ============================================================ */
+.fw-semibold {
+    font-weight: 600 !important;
+}
+
